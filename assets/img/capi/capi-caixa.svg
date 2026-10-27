@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Produto sem foto"><title>Produto sem foto</title>
+<defs>
+  <linearGradient id="pele" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#C08A60"/><stop offset="1" stop-color="#8F5E3C"/>
+  </linearGradient>
+  <linearGradient id="foca" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#D9AE88"/><stop offset="1" stop-color="#BF8E66"/>
+  </linearGradient>
+  <linearGradient id="moletom" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3A6FE0"/><stop offset="1" stop-color="#1B449D"/>
+  </linearGradient>
+  <linearGradient id="caixa" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFE27A"/><stop offset="1" stop-color="#F2B91F"/>
+  </linearGradient>
+  <radialGradient id="brilho" cx="0.35" cy="0.3" r="0.7">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<ellipse cx="100" cy="193" rx="62" ry="6" fill="#263238" opacity="0.12"/>
+<rect width="200" height="200" fill="#F5F7FA"/><g transform="translate(0 -6)"><rect x="46" y="84" width="108" height="78" rx="8" fill="url(#caixa)"/><rect x="94" y="84" width="12" height="78" fill="#E0A612" opacity="0.55"/><rect x="46" y="84" width="108" height="16" rx="8" fill="#FFF0A8" opacity="0.75"/></g><text x="100" y="26" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="14" font-weight="700" fill="#2457C5">Sem foto</text></svg>

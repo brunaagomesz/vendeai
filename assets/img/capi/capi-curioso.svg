@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Capi curioso"><title>Capi curioso</title>
+<defs>
+  <linearGradient id="pele" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#C08A60"/><stop offset="1" stop-color="#8F5E3C"/>
+  </linearGradient>
+  <linearGradient id="foca" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#D9AE88"/><stop offset="1" stop-color="#BF8E66"/>
+  </linearGradient>
+  <linearGradient id="moletom" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3A6FE0"/><stop offset="1" stop-color="#1B449D"/>
+  </linearGradient>
+  <linearGradient id="caixa" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFE27A"/><stop offset="1" stop-color="#F2B91F"/>
+  </linearGradient>
+  <radialGradient id="brilho" cx="0.35" cy="0.3" r="0.7">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<ellipse cx="100" cy="193" rx="62" ry="6" fill="#263238" opacity="0.12"/>
+
+<path d="M44 190 C44 140 66 122 100 122 C134 122 156 140 156 190 Z" fill="url(#moletom)"/>
+<path d="M82 124 C88 136 112 136 118 124" fill="none" stroke="#1B449D" stroke-width="4" stroke-linecap="round"/>
+<path d="M95 128 L94 142 M105 128 L106 142" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+
+<g transform="translate(116 140)">
+  <rect x="0" y="5" width="16" height="15" rx="3" fill="#FFD447"/>
+  <path d="M4 5 C4 -2 12 -2 12 5" fill="none" stroke="#FFD447" stroke-width="2.2"/>
+</g>
+
+<g>
+  <rect x="68" y="156" width="64" height="34" rx="5" fill="url(#caixa)"/>
+  <rect x="94" y="156" width="12" height="34" fill="#E0A612" opacity="0.55"/>
+  <rect x="68" y="156" width="64" height="8" rx="4" fill="#FFF0A8" opacity="0.7"/>
+</g>
+
+<g transform="rotate(-8 100 96)">
+  <circle cx="54" cy="58" r="14" fill="#8F5E3C"/><circle cx="54" cy="58" r="7" fill="#D9AE88"/>
+  <circle cx="146" cy="58" r="14" fill="#8F5E3C"/><circle cx="146" cy="58" r="7" fill="#D9AE88"/>
+  <rect x="42" y="42" width="116" height="88" rx="44" fill="url(#pele)"/>
+  <rect x="42" y="42" width="116" height="88" rx="44" fill="url(#brilho)"/>
+  <ellipse cx="100" cy="108" rx="34" ry="22" fill="url(#foca)"/>
+  <rect x="88" y="92" width="24" height="14" rx="7" fill="#3B2A22"/>
+  <ellipse cx="94" cy="95" rx="5" ry="2.2" fill="#fff" opacity="0.45"/>
+  <circle cx="66" cy="106" r="7" fill="#F2A0A0" opacity="0.45"/>
+  <circle cx="134" cy="106" r="7" fill="#F2A0A0" opacity="0.45"/>
+  <circle cx="76" cy="80" r="10" fill="#fff"/><circle cx="78" cy="79" r="6.2" fill="#2B1B14"/><circle cx="80" cy="76.5" r="2.2" fill="#fff"/><circle cx="124" cy="80" r="8" fill="#fff"/><circle cx="126" cy="79" r="5.0" fill="#2B1B14"/><circle cx="128" cy="76.5" r="1.8" fill="#fff"/>
+  <path d="M112 64 Q124 56 136 64" fill="none" stroke="#3B2A22" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="100" cy="121" rx="5" ry="4" fill="#3B2A22"/>
+</g>
+</svg>

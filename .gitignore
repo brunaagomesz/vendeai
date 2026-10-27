@@ -1,0 +1,14 @@
+# Uploads de produtos (mantém só a pasta)
+assets/img/produtos/*
+!assets/img/produtos/.gitkeep
+
+# Configurações locais / segredos
+config/*.local.php
+.env
+
+# Editor / sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
