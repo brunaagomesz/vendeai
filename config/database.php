@@ -2,7 +2,7 @@
 // Conexão PDO com o MySQL (XAMPP local padrão).
 // Se você definiu senha para o usuário root, ajuste $password.
 
-$host = 'localhost';
+$host = '127.0.0.1';
 $dbname = 'vendeai_db';
 $user = 'root';
 $password = ''; // Padrão comum no XAMPP local
