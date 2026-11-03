@@ -33,10 +33,16 @@ try {
     $where = ['p.ativo = 1'];
     $params = [];
 
-    if ($q !== '') {
-        $where[] = '(p.nome LIKE :q OR p.descricao LIKE :q)';
-        // Escapa curingas do LIKE digitados pelo usuário.
-        $params['q'] = '%' . addcslashes($q, '%_\\') . '%';
+       if ($q !== '') {
+        // Cada marcador (:nome) só pode aparecer uma vez na consulta.
+        // Por isso são dois marcadores diferentes, recebendo o mesmo texto.
+        $where[] = '(p.nome LIKE :busca_nome OR p.descricao LIKE :busca_descricao)';
+
+        // Os % em volta fazem o LIKE achar o texto em qualquer parte do nome ou da descrição.
+        // O addcslashes impede que um % ou _ digitado pela pessoa vire curinga.
+        $termo = '%' . addcslashes($q, '%_\\') . '%';
+        $params['busca_nome'] = $termo;
+        $params['busca_descricao'] = $termo;
     }
     if ($categoriaId) {
         $where[] = 'p.categoria_id = :categoria';

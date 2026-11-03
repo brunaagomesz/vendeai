@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/functions.php';
 // Se alguém abrir o endereço direto ou vier de outro site, só volta para a página inicial.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !csrf_valido()) {
     redirecionar('index.php');
-}
+}   
 
 // Encerra a sessão do usuário atual e volta para a página inicial.
 $_SESSION = [];
