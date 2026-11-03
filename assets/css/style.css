@@ -62,6 +62,15 @@ img { max-width: 100%; }
 .menu a.destaque { background: var(--amarelo); color: var(--grafite); }
 .menu a.destaque:hover { background: #F5C524; }
 
+/* Botão Sair: um formulário, mas com a mesma aparência dos links do menu */
+.form-sair { margin: 0; }
+.form-sair button {
+    font: inherit;            /* usa a mesma fonte do menu */
+    color: #fff; background: none; border: none; cursor: pointer;
+    padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 15px;
+}
+.form-sair button:hover { background: rgba(255, 255, 255, 0.15); }
+
 /* ---------- Estrutura ---------- */
 main.conteudo { max-width: 1140px; margin: 0 auto; padding: 28px 20px 60px; }
 .bloco { max-width: 1140px; margin: 0 auto; padding: 24px 20px; }

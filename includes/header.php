@@ -36,7 +36,10 @@ $flash = pegar_flash();
             <?php if (usuario_logado()): ?>
                 <a href="<?= url('pages/produto-form.php') ?>" class="destaque">Vender</a>
                 <a href="<?= url('pages/minha-conta.php') ?>">Olá, <?= e(explode(' ', $_SESSION['usuario_nome'])[0]) ?></a>
-                <a href="<?= url('logout.php') ?>">Sair</a>
+                <form method="POST" action="<?= url('logout.php') ?>" class="form-sair">
+                    <?= csrf_campo() ?>
+                        <button type="submit">Sair</button>
+                </form>
             <?php else: ?>
                 <a href="<?= url('login.php') ?>">Entrar</a>
                 <a href="<?= url('cadastro.php') ?>" class="destaque">Criar conta</a>
