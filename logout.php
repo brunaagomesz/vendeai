@@ -12,5 +12,10 @@ if (ini_get('session.use_cookies')) {
 session_destroy();
 
 session_start();
+// O session_start acima reabre a sessão com o código antigo, que o navegador acabou de apagar.
+// Gerar um código novo faz o navegador receber a chave certa e encontrar o aviso abaixo.
+session_regenerate_id(true);
+
 flash('sucesso', 'Você saiu da sua conta. Até logo!');
 redirecionar('index.php');
+
