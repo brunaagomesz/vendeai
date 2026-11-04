@@ -200,6 +200,59 @@ main.conteudo { max-width: 1140px; margin: 0 auto; padding: 28px 20px 60px; }
 .cadastro-card h1 { margin-bottom: 8px; color: var(--azul); }
 .cadastro-card > p { line-height: 1.5; }
 
+/* ---------- Telas de login e cadastro com o Capi ---------- */
+
+/* Duas colunas: capivara na esquerda, formulário na direita */
+.login-tela {
+    max-width: 1000px; margin: 0 auto; padding: 32px 20px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+}
+.login-tela .cadastro-card { justify-self: center; }
+
+/* Coluna da capivara: balão em cima, imagem embaixo */
+.login-mascote { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+.login-capivara {
+    width: 100%; max-width: 300px; height: auto;
+    animation: flutuar 4s ease-in-out infinite; /* sobe e desce devagar, sem parar */
+}
+
+/* Balão de fala */
+.login-balao {
+    position: relative; margin: 0; max-width: 300px; padding: 12px 18px;
+    background: var(--branco); border: 2px solid var(--amarelo); border-radius: 18px;
+    font-weight: 600; text-align: center; box-shadow: var(--sombra);
+    animation: aparecer 0.5s ease-out; /* surge uma vez ao abrir a página */
+}
+
+/* Biquinho do balão: um quadrado girado 45 graus, mostrando só duas bordas */
+.login-balao::after {
+    content: ''; position: absolute; left: 50%; bottom: -10px; width: 16px; height: 16px;
+    background: var(--branco);
+    border-right: 2px solid var(--amarelo); border-bottom: 2px solid var(--amarelo);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(8px) scale(0.95); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Celular: uma coluna só, capivara menor em cima do formulário */
+@media (max-width: 760px) {
+    .login-tela { grid-template-columns: 1fr; gap: 16px; padding-top: 16px; }
+    .login-capivara { max-width: 150px; }
+}
+
+/* Quem desligou animações no sistema não vê a capivara se mexendo */
+@media (prefers-reduced-motion: reduce) {
+    .login-capivara, .login-balao { animation: none; }
+}
+
 .capi { padding: 16px; border-radius: 14px; background: var(--amarelo-claro); text-align: center; }
 .capi img { display: block; margin: 0 auto 4px; }
 .capi p { margin: 0; font-weight: 600; }
