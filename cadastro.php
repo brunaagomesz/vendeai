@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'senha_hash' => $senhaHash,
             ]);
 
-            $mensagem = 'Cadastro realizado com sucesso! Bem-vindo ao VendeAí.';
-            $tipoMensagem = 'sucesso';
-            $nome = '';
-            $email = '';
+            // Conta criada: volta para o login com o e-mail já preenchido
+            flash('sucesso', 'Conta criada! Agora é só entrar com seu e-mail e senha.');
+            $_SESSION['email_cadastrado'] = $email;
+            redirecionar('login.php');
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 $mensagem = 'Este e-mail já está cadastrado.';
@@ -64,21 +64,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($tipoMensagem === 'erro') {
         $capiContexto = 'erro';
-    } elseif ($tipoMensagem === 'sucesso') {
-        $capiContexto = 'sucesso';
     }
 }
 
+// O que o Capi fala no balão depende do que aconteceu
+$fala = 'Oi! Eu sou o Capi. Vamos criar sua conta?';
+if ($tipoMensagem === 'erro') {
+    $fala = 'Quase lá! Dá uma olhada na mensagem em vermelho.';
+}
+
 $titulo = 'Criar conta';
+$esconderCapi = true; // o Capi já aparece grande nesta página, então o pequeno do canto sai
 include __DIR__ . '/includes/header.php';
 ?>
-<main class="cadastro-container">
-    <section class="cadastro-card">
-        <div class="capi">
-            <img src="<?= url('assets/img/capi/capi-feliz.svg') ?>" alt="" width="96" height="96">
-            <p>Oi! Eu sou o Capi. Vamos criar sua conta?</p>
-        </div>
+<main class="login-tela">
+    <!-- Lado do mascote: o Capi com o balão de fala -->
+    <section class="login-mascote" aria-label="Capi, o mascote do VendeAí">
+        <p class="login-balao"><?= e($fala) ?></p>
+        <img class="login-capivara" src="<?= url('assets/img/capi/capivara.webp') ?>"
+             alt="Capi, a capivara mascote do VendeAí, fazendo joinha" width="600" height="968">
+    </section>
 
+    <!-- Lado do formulário -->
+    <section class="cadastro-card">
         <h1>Crie sua conta</h1>
         <p>Entre para descobrir (e vender) tudo no VendeAí.</p>
 

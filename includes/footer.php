@@ -7,7 +7,12 @@ $capiContexto = $capiContexto ?? 'geral';
     <p class="pequeno">Projeto acadêmico • PHP, MySQL e XAMPP</p>
 </footer>
 
-<?php include __DIR__ . '/capi.php'; ?>
+<?php
+// O Capi do canto aparece em todas as páginas, menos nas que pedirem $esconderCapi = true
+if (empty($esconderCapi)) {
+    include __DIR__ . '/capi.php';
+}
+?>
 <script src="<?= url('assets/js/script.js') ?>"></script>
 </body>
 </html>
