@@ -4,7 +4,7 @@
 //   $capiContexto  chave do contexto do Capi (ver includes/capi.php)
 require_once __DIR__ . '/functions.php';
 $titulo = $titulo ?? 'VendeAí';
-$busca_atual = trim($_GET['q'] ?? '');
+$busca_atual = campo_get('q');
 $flash = pegar_flash();
 ?>
 <!DOCTYPE html>
