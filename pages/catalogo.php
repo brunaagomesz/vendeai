@@ -6,10 +6,10 @@ require_once __DIR__ . '/../includes/produto-card.php';
 $titulo = 'Catálogo';
 $capiContexto = 'busca';
 
-$q = trim($_GET['q'] ?? '');
+$q = campo_get('q');
 $q = mb_substr($q, 0, 100);
 $categoriaId = filter_var($_GET['categoria'] ?? null, FILTER_VALIDATE_INT) ?: null;
-$ordem = $_GET['ordem'] ?? 'recentes';
+$ordem = campo_get('ordem');
 $pagina = max(1, (int) ($_GET['pagina'] ?? 1));
 $porPagina = 12;
 

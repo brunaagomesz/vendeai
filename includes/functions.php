@@ -100,3 +100,9 @@ function imagem_produto(?string $arquivo): string
     }
     return url('assets/img/capi/capi-caixa.svg');
 }
+
+function campo_get(string $nome): string
+{
+    $valor = $_GET[$nome] ?? '';
+    return is_string($valor) ? trim($valor) : ''; 
+}
