@@ -11,11 +11,11 @@ $capiContexto = $capiContexto ?? 'geral';
         <button type="button" class="capi-dica" id="capi-dica">Outra dica</button>
     </div>
     <button type="button" class="capi-botao" id="capi-botao" aria-label="Falar com o Capi">
-        <img src="<?= url('assets/img/capi/capi-feliz.svg') ?>" alt="Capi, a capivara mascote do VendeAí"
-             id="capi-img" width="84" height="84"
-             data-feliz="<?= url('assets/img/capi/capi-feliz.svg') ?>"
-             data-curioso="<?= url('assets/img/capi/capi-curioso.svg') ?>"
-             data-pensativo="<?= url('assets/img/capi/capi-pensativo.svg') ?>"
-             data-comemorando="<?= url('assets/img/capi/capi-comemorando.svg') ?>">
+        <img src="<?= url('assets/img/capi/capi-feliz.svg') . '?v=2' ?>" alt="Capi, a capivara mascote do VendeAí"
+            id="capi-img" width="84" height="84"
+            data-feliz="<?= url('assets/img/capi/capi-feliz.svg') . '?v=2' ?>"
+            data-curioso="<?= url('assets/img/capi/capi-curioso.svg') . '?v=2' ?>"
+            data-pensativo="<?= url('assets/img/capi/capi-pensativo.svg') . '?v=2' ?>"
+            data-comemorando="<?= url('assets/img/capi/capi-comemorando.svg') . '?v=2' ?>">
     </button>
 </aside>

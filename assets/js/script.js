@@ -79,12 +79,45 @@
         try { sessionStorage.setItem(chave, '1'); } catch (e) { /* ignora */ }
     }
 
-    // Confirmação antes de excluir produto.
+       // Confirmação antes de excluir produto (janela própria, no estilo do site).
+    function confirmarExclusao(aoConfirmar) {
+        var anterior = document.activeElement;
+        var fundo = document.createElement('div');
+        fundo.className = 'modal-fundo';
+        fundo.innerHTML =
+            '<div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-desc">' +
+            '<div class="modal-icone" aria-hidden="true">!</div>' +
+            '<h2 id="modal-titulo">Tem certeza que deseja excluir este item?</h2>' +
+            '<p id="modal-desc">Essa ação não pode ser desfeita.</p>' +
+            '<div class="modal-botoes">' +
+            '<button type="button" class="btn btn-claro" data-acao="cancelar">Cancelar</button>' +
+            '<button type="button" class="btn btn-perigo" data-acao="confirmar">Sim, excluir</button>' +
+            '</div></div>';
+
+        function fechar() {
+            document.removeEventListener('keydown', teclado);
+            fundo.remove();
+            if (anterior && anterior.focus) { anterior.focus(); }
+        }
+        function teclado(ev) {
+            if (ev.key === 'Escape') { fechar(); }
+        }
+
+        fundo.addEventListener('click', function (ev) {
+            if (ev.target === fundo) { fechar(); }
+            var acao = ev.target.getAttribute && ev.target.getAttribute('data-acao');
+            if (acao === 'cancelar') { fechar(); }
+            if (acao === 'confirmar') { fechar(); aoConfirmar(); }
+        });
+        document.addEventListener('keydown', teclado);
+        document.body.appendChild(fundo);
+        fundo.querySelector('[data-acao="cancelar"]').focus();
+    }
+
     document.querySelectorAll('form[data-confirmar]').forEach(function (form) {
         form.addEventListener('submit', function (ev) {
-            if (!window.confirm(form.getAttribute('data-confirmar'))) {
-                ev.preventDefault();
-            }
+            ev.preventDefault();
+            confirmarExclusao(function () { form.submit(); });
         });
     });
 })();

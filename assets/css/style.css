@@ -357,3 +357,34 @@ form label.check input { width: auto; }
 @media (prefers-reduced-motion: reduce) {
     .capi-botao, .produto-card { transition: none; }
 }
+
+/* ---------- Janela de confirmação (excluir) ---------- */
+.modal-fundo {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px; background: rgba(38, 50, 56, 0.55);
+    animation: modal-fade 0.15s ease-out;
+}
+.modal {
+    width: 100%; max-width: 400px; padding: 28px 24px 24px;
+    background: var(--branco); border-radius: 18px; text-align: center;
+    box-shadow: 0 20px 50px rgba(38, 50, 56, 0.3);
+    animation: modal-sobe 0.18s ease-out;
+}
+.modal-icone {
+    width: 52px; height: 52px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: #FDECEC; color: #D32F2F;
+    font-family: Poppins, Arial, sans-serif; font-size: 28px; font-weight: 700;
+}
+.modal h2 { margin: 0 0 6px; font-size: 20px; color: var(--grafite); }
+.modal p { margin: 0 0 22px; color: #5B6B78; }
+.modal-botoes { display: flex; gap: 12px; }
+.modal-botoes .btn { flex: 1; margin: 0; }
+.btn-perigo { background: #D32F2F; color: #fff; }
+.btn-perigo:hover { background: #B71C1C; }
+.modal .btn:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 2px; }
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-sobe { from { transform: translateY(12px) scale(0.97); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (max-width: 420px) { .modal-botoes { flex-direction: column-reverse; } }
+@media (prefers-reduced-motion: reduce) { .modal-fundo, .modal { animation: none; } }

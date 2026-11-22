@@ -38,8 +38,7 @@ include __DIR__ . '/includes/header.php';
                 <?php endif; ?>
             </div>
         </div>
-        <img class="hero-capi" src="<?= url('assets/img/capi/capi-comemorando.svg') ?>"
-             alt="Capi, o mascote do VendeAí, comemorando" width="240" height="240">
+            <img class="hero-capi" src="<?= url('assets/img/capi/capi-comemorando.svg') . '?v=2' ?>"             alt="Capi, o mascote do VendeAí, comemorando" width="240" height="240">
     </section>
 
     <section class="bloco">
