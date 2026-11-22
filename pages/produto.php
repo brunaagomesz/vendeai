@@ -71,10 +71,22 @@ include __DIR__ . '/../includes/header.php';
 
             <?php if ($ehDono): ?>
                 <a class="btn" href="<?= url('pages/produto-form.php?id=' . (int) $produto['id']) ?>">Editar anúncio</a>
+            <?php elseif ((int) $produto['estoque'] > 0 && $produto['ativo']): ?>
+                <form class="comprar-form" method="POST" action="<?= url('pages/carrinho-acao.php') ?>">
+                    <?= csrf_campo() ?>
+                    <input type="hidden" name="acao" value="adicionar">
+                    <input type="hidden" name="id" value="<?= (int) $produto['id'] ?>">
+                    <label for="qtd">Quantidade</label>
+                    <input type="number" id="qtd" name="qtd" value="1" min="1"
+                           max="<?= min((int) $produto['estoque'], CARRINHO_MAX_POR_ITEM) ?>" inputmode="numeric">
+                    <div class="comprar-botoes">
+                        <button type="submit" name="destino" value="carrinho" class="btn">Comprar agora</button>
+                        <button type="submit" name="destino" value="produto" class="btn btn-claro">Adicionar ao carrinho</button>
+                    </div>
+                </form>
             <?php else: ?>
-                <button type="button" class="btn" disabled title="Pagamento online fica para etapas futuras">Comprar (em breve)</button>
+                <button type="button" class="btn" disabled>Produto esgotado</button>
             <?php endif; ?>
-
             <h2>Descrição</h2>
             <p class="descricao"><?= nl2br(e($produto['descricao'] ?: 'Sem descrição.')) ?></p>
         </div>
