@@ -45,7 +45,12 @@ $acao = url('pages/carrinho-acao.php');
             <?php foreach ($itens as $i): ?>
                 <article class="carrinho-item">
                     <a class="carrinho-foto" href="<?= url('pages/produto.php?id=' . $i['id']) ?>">
-                        <img src="<?= imagem_produto($i['imagem']) ?>" alt="<?= e($i['nome']) ?>" loading="lazy">
+                        <?php if ($i['imagem']): ?>
+                            <img src="<?= imagem_produto($i['imagem']) ?>" alt="<?= e($i['nome']) ?>" loading="lazy">
+                        <?php else: ?>
+                            <!-- Sem foto: fundo cinza com o ícone da categoria, igual aos cards -->
+                            <span class="carrinho-sem-foto"><?= icone_categoria($i['categoria_nome']) ?></span>
+                        <?php endif; ?>
                     </a>
 
                     <div class="carrinho-info">
@@ -147,7 +152,7 @@ $acao = url('pages/carrinho-acao.php');
             <?php if ($faltaGratis > 0): ?>
                 <p class="frete-dica">Faltam <strong><?= e(preco_formatado($faltaGratis)) ?></strong> para o frete Econômico ser grátis.</p>
             <?php else: ?>
-                <p class="frete-dica ok">Você ganhou frete Econômico grátis! 🎉</p>
+                <p class="frete-dica ok">Você ganhou frete Econômico grátis.</p>
             <?php endif; ?>
 
             <p class="resumo-total"><span>Total</span><strong><?= e(preco_formatado($total)) ?></strong></p>
@@ -156,6 +161,7 @@ $acao = url('pages/carrinho-acao.php');
             <?php endif; ?>
 
             <button type="button" class="btn" disabled title="Pagamento online fica para a próxima etapa">Finalizar compra (em breve)</button>
+            <p class="aviso-simulado">Compra simulada: nenhum pagamento é feito.</p>
         </aside>
     </div>
     <?php endif; ?>

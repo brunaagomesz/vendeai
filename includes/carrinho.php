@@ -115,7 +115,13 @@ function carrinho_detalhado(PDO $pdo): array
 
     $ids = array_keys($bruto);
     $marcas = implode(',', array_fill(0, count($ids), '?'));
-    $stmt = $pdo->prepare("SELECT id, nome, preco, imagem, estoque FROM produtos WHERE ativo = 1 AND id IN ($marcas)");
+    // A categoria vem junto para mostrar o ícone dela quando o produto não tem foto
+    $stmt = $pdo->prepare(
+        "SELECT p.id, p.nome, p.preco, p.imagem, p.estoque, c.nome AS categoria_nome
+           FROM produtos p
+      LEFT JOIN categorias c ON c.id = p.categoria_id
+          WHERE p.ativo = 1 AND p.id IN ($marcas)"
+    );
     $stmt->execute($ids);
     $produtos = [];
     foreach ($stmt->fetchAll() as $p) {
@@ -138,7 +144,7 @@ function carrinho_detalhado(PDO $pdo): array
         $total = round((float) $p['preco'] * $qtd, 2);
         $resultado['itens'][] = [
             'id' => $id, 'nome' => $p['nome'], 'preco' => (float) $p['preco'],
-            'imagem' => $p['imagem'], 'estoque' => $estoque, 'qtd' => $qtd, 'total' => $total,
+            'imagem' => $p['imagem'], 'categoria_nome' => $p['categoria_nome'], 'estoque' => $estoque, 'qtd' => $qtd, 'total' => $total,
         ];
         $resultado['subtotal'] += $total;
         $resultado['unidades'] += $qtd;
