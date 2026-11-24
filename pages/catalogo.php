@@ -25,7 +25,7 @@ if (!isset($ordenacoes[$ordem])) {
 
 $produtos = [];
 $categorias = [];
-$total = 0;
+$total = 0; 
 
 try {
     $categorias = $pdo->query('SELECT id, nome FROM categorias ORDER BY nome')->fetchAll();
@@ -58,7 +58,7 @@ try {
     $pagina = min($pagina, $totalPaginas);
     $offset = ($pagina - 1) * $porPagina;
 
-    $sql = "SELECT p.id, p.nome, p.preco, p.imagem, p.estoque, c.nome AS categoria_nome
+    $sql = "SELECT p.id, p.nome, p.preco, p.imagem, p.estoque, p.data_cadastro, c.nome AS categoria_nome
               FROM produtos p
          LEFT JOIN categorias c ON c.id = p.categoria_id
              WHERE $whereSql
@@ -85,55 +85,86 @@ function link_catalogo(array $extra): string
     return url('pages/catalogo.php') . ($params ? '?' . http_build_query($params) : '');
 }
 
+// Nome da categoria escolhida (para o título e o aviso de filtro ativo)
+$categoriaNome = '';
+foreach ($categorias as $c) {
+    if ($categoriaId === (int) $c['id']) {
+        $categoriaNome = $c['nome'];
+    }
+}
+
 include __DIR__ . '/../includes/header.php';
 ?>
-<main class="conteudo">
-    <h1>Catálogo</h1>
+<main class="envolve pagina">
+    <div class="catalogo">
+        <!-- Coluna da esquerda: filtros. Usa os mesmos parâmetros de antes (q, categoria, ordem). -->
+        <form class="filtros painel" method="GET" action="<?= url('pages/catalogo.php') ?>" aria-label="Filtros">
+            <div>
+                <label class="filtro-titulo" for="f-q">Buscar</label>
+                <input type="search" id="f-q" name="q" maxlength="100" value="<?= e($q) ?>" placeholder="Nome ou descrição">
+            </div>
 
-    <form class="filtros" method="GET" action="<?= url('pages/catalogo.php') ?>">
-        <div>
-            <label for="f-q">Buscar</label>
-            <input type="search" id="f-q" name="q" maxlength="100" value="<?= e($q) ?>" placeholder="Nome ou descrição">
-        </div>
-        <div>
-            <label for="f-cat">Categoria</label>
-            <select id="f-cat" name="categoria">
-                <option value="">Todas</option>
+            <fieldset>
+                <legend class="filtro-titulo">Categoria</legend>
+                <label class="opcao-filtro">
+                    <input type="radio" name="categoria" value="" <?= !$categoriaId ? 'checked' : '' ?>> Todas
+                </label>
                 <?php foreach ($categorias as $c): ?>
-                    <option value="<?= (int) $c['id'] ?>" <?= $categoriaId === (int) $c['id'] ? 'selected' : '' ?>><?= e($c['nome']) ?></option>
+                    <label class="opcao-filtro">
+                        <input type="radio" name="categoria" value="<?= (int) $c['id'] ?>" <?= $categoriaId === (int) $c['id'] ? 'checked' : '' ?>>
+                        <?= e($c['nome']) ?>
+                    </label>
                 <?php endforeach; ?>
-            </select>
-        </div>
-        <div>
-            <label for="f-ordem">Ordenar por</label>
-            <select id="f-ordem" name="ordem">
-                <option value="recentes" <?= $ordem === 'recentes' ? 'selected' : '' ?>>Mais recentes</option>
-                <option value="menor" <?= $ordem === 'menor' ? 'selected' : '' ?>>Menor preço</option>
-                <option value="maior" <?= $ordem === 'maior' ? 'selected' : '' ?>>Maior preço</option>
-                <option value="nome" <?= $ordem === 'nome' ? 'selected' : '' ?>>Nome (A–Z)</option>
-            </select>
-        </div>
-        <button type="submit" class="btn">Filtrar</button>
-    </form>
+            </fieldset>
 
-    <p class="resultado-info"><?= $total ?> produto<?= $total === 1 ? '' : 's' ?> encontrado<?= $total === 1 ? '' : 's' ?></p>
+            <div>
+                <label class="filtro-titulo" for="f-ordem">Ordenar por</label>
+                <select id="f-ordem" name="ordem">
+                    <option value="recentes" <?= $ordem === 'recentes' ? 'selected' : '' ?>>Mais recentes</option>
+                    <option value="menor" <?= $ordem === 'menor' ? 'selected' : '' ?>>Menor preço</option>
+                    <option value="maior" <?= $ordem === 'maior' ? 'selected' : '' ?>>Maior preço</option>
+                    <option value="nome" <?= $ordem === 'nome' ? 'selected' : '' ?>>Nome (A a Z)</option>
+                </select>
+            </div>
 
-    <?php if (!$produtos): ?>
-        <p class="vazio">Ainda não encontrei produtos por aqui.</p>
-    <?php else: ?>
-        <div class="grade-produtos">
-            <?php foreach ($produtos as $p) { renderizar_produto_card($p); } ?>
-        </div>
+            <button type="submit" class="btn btn-azul">Filtrar</button>
+        </form>
 
-        <?php if ($totalPaginas > 1): ?>
-            <nav class="paginacao" aria-label="Paginação">
-                <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                    <a href="<?= e(link_catalogo(['pagina' => $i])) ?>"
-                       class="<?= $i === $pagina ? 'ativa' : '' ?>"
-                       <?= $i === $pagina ? 'aria-current="page"' : '' ?>><?= $i ?></a>
-                <?php endfor; ?>
-            </nav>
-        <?php endif; ?>
-    <?php endif; ?>
+        <!-- Coluna da direita: título, quantidade e produtos -->
+        <section>
+            <div class="cat-topo">
+                <div>
+                    <h1><?= $categoriaNome !== '' ? e($categoriaNome) : 'Catálogo' ?></h1>
+                    <p><?= $total ?> produto<?= $total === 1 ? '' : 's' ?> encontrado<?= $total === 1 ? '' : 's' ?></p>
+                </div>
+            </div>
+
+            <?php if ($q !== '' || $categoriaNome !== ''): ?>
+                <div class="chips-ativos">
+                    <?php if ($q !== ''): ?><span class="chip">Busca: <?= e($q) ?></span><?php endif; ?>
+                    <?php if ($categoriaNome !== ''): ?><span class="chip"><?= e($categoriaNome) ?></span><?php endif; ?>
+                    <a class="limpar-filtros" href="<?= url('pages/catalogo.php') ?>">Limpar filtros</a>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!$produtos): ?>
+                <p class="vazio">Ainda não encontrei produtos por aqui.</p>
+            <?php else: ?>
+                <div class="grade">
+                    <?php foreach ($produtos as $p) { renderizar_produto_card($p); } ?>
+                </div>
+
+                <?php if ($totalPaginas > 1): ?>
+                    <nav class="paginacao" aria-label="Paginação">
+                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                            <a href="<?= e(link_catalogo(['pagina' => $i])) ?>"
+                               class="<?= $i === $pagina ? 'ativa' : '' ?>"
+                               <?= $i === $pagina ? 'aria-current="page"' : '' ?>><?= $i ?></a>
+                        <?php endfor; ?>
+                    </nav>
+                <?php endif; ?>
+            <?php endif; ?>
+        </section>
+    </div>
 </main>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

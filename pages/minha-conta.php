@@ -64,10 +64,15 @@ include __DIR__ . '/../includes/header.php';
                     <?php foreach ($meusProdutos as $p): ?>
                         <tr>
                             <td data-rotulo="Produto">
-                                <img class="miniatura" src="<?= imagem_produto($p['imagem']) ?>" alt="">
+                                <?php if ($p['imagem']): ?>
+                                    <img class="miniatura" src="<?= imagem_produto($p['imagem']) ?>" alt="">
+                                <?php else: ?>
+                                    <!-- Sem foto: quadradinho cinza com o ícone da categoria -->
+                                    <span class="miniatura miniatura-sem-foto"><?= icone_categoria($p['categoria_nome']) ?></span>
+                                <?php endif; ?>
                                 <a href="<?= url('pages/produto.php?id=' . (int) $p['id']) ?>"><?= e($p['nome']) ?></a>
                             </td>
-                            <td data-rotulo="Categoria"><?= e($p['categoria_nome'] ?? '—') ?></td>
+                            <td data-rotulo="Categoria"><?= e($p['categoria_nome'] ?? 'Sem categoria') ?></td>
                             <td data-rotulo="Preço"><?= e(preco_formatado($p['preco'])) ?></td>
                             <td data-rotulo="Estoque"><?= (int) $p['estoque'] ?></td>
                             <td data-rotulo="Status"><?= $p['ativo'] ? 'Ativo' : 'Pausado' ?></td>
