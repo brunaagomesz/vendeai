@@ -28,8 +28,8 @@ try {
 }
 
 if (!$usuario) {
-    // Conta removida do banco: encerra a sessão.
-    redirecionar('logout.php');
+    // Não deu para carregar a conta: volta para o início em vez de quebrar a página.
+    redirecionar('index.php');
 }
 
 $titulo = 'Minha conta';

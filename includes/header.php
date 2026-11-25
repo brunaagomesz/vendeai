@@ -37,8 +37,8 @@ if (isset($pdo)) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= url('assets/css/style.css') ?>">
-    <link rel="stylesheet" href="<?= url('assets/css/carrinho.css') ?>">
+    <link rel="stylesheet" href="<?= url('assets/css/style.css') ?>?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= url('assets/css/carrinho.css') ?>?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/carrinho.css') ?>">
 </head>
 <body>
 <header class="topo">

@@ -32,11 +32,11 @@ transportadoras, chat com IA e gestão completa de vendedores.
 3. Abra `http://localhost/phpmyadmin`, vá na aba **SQL** e execute, nesta ordem:
    - `database/schema.sql` (cria o banco `vendeai_db` e as tabelas)
    - `database/seed.sql` (opcional: produtos de exemplo)
-4. Se o usuário `root` do MySQL tiver senha, ajuste `$password` em `config/database.php`.
+4. Se o usuário `root` do MySQL tiver senha, crie `config/database.local.php` com `<?php $password = 'sua_senha';` (esse arquivo não vai para o Git).
 5. Acesse `http://localhost/vendeai/`.
 
 > Abra sempre pelo `http://localhost/...`. Não abra arquivos `.php` direto do disco.
-> Se a pasta tiver outro nome, altere `BASE_URL` em `includes/functions.php`.
+> O caminho do site é detectado sozinho: funciona com outro nome de pasta e também com `php -S localhost:8000` na pasta do projeto.
 
 ### Roteiro de teste
 

@@ -49,7 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'estoque' => $estoqueTexto, 'categoria_id' => $categoriaId, 'ativo' => $ativo,
     ]);
 
-    if (!csrf_valido()) {
+    // Envio maior que o post_max_size do PHP: o PHP descarta $_POST e $_FILES inteiros.
+    $envioGrandeDemais = !$_POST && !$_FILES && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0;
+
+    if ($envioGrandeDemais) {
+        $erros[] = 'O arquivo enviado é grande demais. Use uma imagem de até 2 MB.';
+    } elseif (!csrf_valido()) {
         $erros[] = 'Sessão expirada. Recarregue a página e tente novamente.';
     }
     if ($nome === '' || mb_strlen($nome) > 150) {

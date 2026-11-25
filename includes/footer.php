@@ -43,6 +43,6 @@ if (empty($esconderCapi)) {
     include __DIR__ . '/capi.php';
 }
 ?>
-<script src="<?= url('assets/js/script.js') ?>"></script>
+<script src="<?= url('assets/js/script.js') ?>?v=<?= (int) @filemtime(__DIR__ . '/../assets/js/script.js') ?>"></script>
 </body>
 </html>

@@ -1,8 +1,33 @@
 <?php
 // Configurações gerais e funções auxiliares do VendeAí.
 
-// Caminho da aplicação no Apache (http://localhost/vendeai).
-define('BASE_URL', '/vendeai');
+// Horário de Brasília (o php.ini do XAMPP vem com Europe/Berlin).
+date_default_timezone_set('America/Sao_Paulo');
+
+// Caminho da aplicação no servidor, descoberto sozinho:
+//   http://localhost/vendeai/   -> "/vendeai"
+//   http://localhost/outro-nome -> "/outro-nome"
+//   php -S / PHP Server do VS Code (pasta do projeto como raiz) -> ""
+// Para forçar um valor, defina BASE_URL antes de incluir este arquivo.
+function detectar_base_url(): string
+{
+    $raiz = realpath(__DIR__ . '/..');
+    $docRoot = realpath($_SERVER['DOCUMENT_ROOT'] ?? '');
+    if ($raiz && $docRoot) {
+        $raiz = rtrim(str_replace('\\', '/', $raiz), '/');
+        $docRoot = rtrim(str_replace('\\', '/', $docRoot), '/');
+        // No Windows a caixa das letras do caminho pode variar (C:/ x c:/)
+        if (strncasecmp($raiz, $docRoot, strlen($docRoot)) === 0) {
+            $resto = substr($raiz, strlen($docRoot));
+            return implode('/', array_map('rawurlencode', explode('/', $resto)));
+        }
+    }
+    return '/vendeai';
+}
+
+if (!defined('BASE_URL')) {
+    define('BASE_URL', detectar_base_url());
+}
 
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
@@ -49,6 +74,36 @@ function exigir_login(): void
         $_SESSION['flash'] = ['tipo' => 'erro', 'texto' => 'Faça login para continuar.'];
         redirecionar('login.php');
     }
+
+    // A conta ainda existe no banco? (pode ter sido apagada com a sessão aberta)
+    $pdo = $GLOBALS['pdo'] ?? null;
+    if ($pdo instanceof PDO) {
+        try {
+            $stmt = $pdo->prepare('SELECT 1 FROM usuarios WHERE id = :id');
+            $stmt->execute(['id' => (int) $_SESSION['usuario_id']]);
+            if (!$stmt->fetchColumn()) {
+                encerrar_sessao();
+                flash('erro', 'Sua sessão não é mais válida. Entre novamente.');
+                redirecionar('login.php');
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+    }
+}
+
+// Apaga a sessão atual por completo e começa uma nova, vazia (para o flash funcionar).
+function encerrar_sessao(): void
+{
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+        $p = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $p['path'], $p['domain'], $p['secure'], $p['httponly']);
+    }
+    session_destroy();
+    session_start();
+    // Código novo de sessão, para o navegador receber a chave certa.
+    session_regenerate_id(true);
 }
 
 // ---- Mensagens rápidas (flash) ----

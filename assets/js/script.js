@@ -4,6 +4,7 @@
 //   3. Botões − e + da quantidade (página do produto)
 //   4. Vídeo do Capi parado para quem pede menos movimento
 //   5. Confirmação antes de excluir produto
+//   6. Filtros do catálogo aplicados na hora
 // Cada parte é independente: se a página não tiver aquele pedaço, ele é ignorado.
 (function () {
     'use strict';
@@ -172,6 +173,15 @@
         form.addEventListener('submit', function (ev) {
             ev.preventDefault();
             confirmarExclusao(function () { form.submit(); });
+        });
+    });
+
+    // ---------- 6. Filtros do catálogo ----------
+    // Trocar a categoria ou a ordenação já atualiza a lista, sem precisar clicar em "Filtrar".
+    // (O botão continua lá para a busca por texto e para quem está sem JavaScript.)
+    document.querySelectorAll('form.filtros').forEach(function (form) {
+        form.querySelectorAll('input[type="radio"], select').forEach(function (campo) {
+            campo.addEventListener('change', function () { form.submit(); });
         });
     });
 })();
